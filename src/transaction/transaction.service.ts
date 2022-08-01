@@ -10,7 +10,6 @@ import {
   SystemProgram,
   Transaction,
 } from '@solana/web3.js';
-import { DEVNET_WALLET_PUBLIC_KEY_1 } from 'src/common/consts';
 import { getValuesInSOLAndLamports } from 'src/common/helpers';
 import { WalletService } from 'src/wallet/wallet.service';
 import { TransferSolDTO } from './dto/transfer-sol.dto';

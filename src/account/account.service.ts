@@ -1,9 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ACCOUNT_SIZE, MINT_SIZE, MULTISIG_SIZE } from '@solana/spl-token';
 import { clusterApiUrl, Connection } from '@solana/web3.js';
-import axios from 'axios';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const bs58 = require('bs58');
 import { getValuesInSOLAndLamports } from 'src/common/helpers';
 import { GetMinimumBalanceDTO } from './dto/get-minimum-balance.dto';
 

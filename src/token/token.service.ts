@@ -53,6 +53,7 @@ export class TokenService {
     }
   }
 
+  // FIXME: WIP (not working as intended yet)
   async mint() {
     try {
       const newWallet = await this.walletService.createWallet();
