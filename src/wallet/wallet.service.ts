@@ -1,5 +1,5 @@
 import { Metaplex } from '@metaplex-foundation/js';
-import { HttpStatus, Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { AccountLayout, TOKEN_PROGRAM_ID } from '@solana/spl-token';
 import {
   clusterApiUrl,
@@ -11,10 +11,7 @@ import {
 } from '@solana/web3.js';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const bs58 = require('bs58');
-import {
-  buildResponseObject,
-  getValuesInSOLAndLamports,
-} from 'src/common/helpers';
+import { getValuesInSOLAndLamports } from 'src/common/helpers';
 import { RequestAirdropDTO } from './dto/request-airdrop.dto';
 
 @Injectable()
@@ -31,17 +28,14 @@ export class WalletService {
 
       const keypair = new Keypair();
 
-      return buildResponseObject(
-        {
-          publicKey: keypair.publicKey.toBase58(),
-          privateKey: {
-            base58: bs58.encode(keypair.secretKey),
-            array: Array.from(keypair.secretKey),
-            uint8Array: keypair.secretKey,
-          },
+      return {
+        publicKey: keypair.publicKey.toBase58(),
+        privateKey: {
+          base58: bs58.encode(keypair.secretKey),
+          array: Array.from(keypair.secretKey),
+          uint8Array: keypair.secretKey,
         },
-        HttpStatus.CREATED,
-      );
+      };
     } catch (error) {
       this.logger.error(error.message);
       throw error;
@@ -76,12 +70,12 @@ export class WalletService {
         signature: airdropSignature,
       });
 
-      return buildResponseObject({
+      return {
         cluster: this.cluster,
         destinationWallet: walletPublicKey,
         amount: value,
         transactionResponse: txResponse,
-      });
+      };
     } catch (error) {
       this.logger.error(error.message);
       throw error;
@@ -106,18 +100,18 @@ export class WalletService {
           tokenAccountValue.account.data,
         );
 
-        return buildResponseObject({
+        return {
           ...accountInfo,
           amount: Number(accountInfo.amount),
           isNative: Number(accountInfo.isNative),
           delegatedAmount: Number(accountInfo.delegatedAmount),
-        });
+        };
       });
 
-      return buildResponseObject({
+      return {
         message: !response.length ? 'Nothing was found' : undefined,
         response,
-      });
+      };
     } catch (error) {
       this.logger.error(error.message);
       throw error;
@@ -140,10 +134,10 @@ export class WalletService {
         this.commitmet,
       );
 
-      return buildResponseObject({
+      return {
         accountInfo,
         balance: getValuesInSOLAndLamports(balance),
-      });
+      };
     } catch (error) {
       this.logger.error(error.message);
       throw error;

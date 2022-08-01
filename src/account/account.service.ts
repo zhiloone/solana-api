@@ -1,14 +1,10 @@
-import { Metaplex } from '@metaplex-foundation/js';
 import { Injectable, Logger } from '@nestjs/common';
 import { ACCOUNT_SIZE, MINT_SIZE, MULTISIG_SIZE } from '@solana/spl-token';
 import { clusterApiUrl, Connection } from '@solana/web3.js';
 import axios from 'axios';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const bs58 = require('bs58');
-import {
-  buildResponseObject,
-  getValuesInSOLAndLamports,
-} from 'src/common/helpers';
+import { getValuesInSOLAndLamports } from 'src/common/helpers';
 import { GetMinimumBalanceDTO } from './dto/get-minimum-balance.dto';
 
 @Injectable()
@@ -39,29 +35,24 @@ export class AccountService {
 
       this.logger.log(`Checking minimum balance for rent exemption`);
 
-      const requestBody = {
-        jsonrpc: '2.0',
-        id: 1,
-        method: 'getMinimumBalanceForRentExemption',
-      };
-
       const promises = infosToCheck.map((byteToCheck) => {
-        return axios.post(this.cluster, {
-          ...requestBody,
-          params: [byteToCheck.size],
-        });
+        return this.connection.getMinimumBalanceForRentExemption(
+          byteToCheck.size,
+        );
       });
 
       const arrayOfResponses = await Promise.all(promises);
 
-      const arrayOfResponseData = arrayOfResponses.map(({ data }, index) => {
+      const arrayOfResponseData = arrayOfResponses.map((result, index) => {
         return {
           ...infosToCheck[index],
-          value: getValuesInSOLAndLamports(data.result),
+          value: getValuesInSOLAndLamports(result),
         };
       });
 
-      return buildResponseObject(arrayOfResponseData);
+      return {
+        arrayOfResponseData,
+      };
     } catch (error) {
       this.logger.error(error.message);
       throw error;

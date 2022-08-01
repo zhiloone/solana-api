@@ -2,6 +2,8 @@ import { Keypair } from '@solana/web3.js';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const bs58 = require('bs58');
 
+export const WINSTONS_PER_AR = 10 ** 12;
+
 export const DEVNET_MINT_1 = 'Fngc3zEeAvcE5yLXBjJrYe2cPSgkzXpfzsktXutgpSRE';
 export const DEVNET_MINT_2 = 'Fngc3zEeAvcE5yLXBjJrYe2cPSgkzXpfzsktXutgpSRE';
 export const DEVNET_MINT_3 = 'Fngc3zEeAvcE5yLXBjJrYe2cPSgkzXpfzsktXutgpSRE';

@@ -10,11 +10,8 @@ import {
   SystemProgram,
   Transaction,
 } from '@solana/web3.js';
-import { DEVNET_KEYPAIR_1 } from 'src/common/consts';
-import {
-  buildResponseObject,
-  getValuesInSOLAndLamports,
-} from 'src/common/helpers';
+import { DEVNET_WALLET_PUBLIC_KEY_1 } from 'src/common/consts';
+import { getValuesInSOLAndLamports } from 'src/common/helpers';
 import { WalletService } from 'src/wallet/wallet.service';
 import { TransferSolDTO } from './dto/transfer-sol.dto';
 
@@ -38,7 +35,7 @@ export class TransactionService {
 
       const value = getValuesInSOLAndLamports(SOL || lamports, !!SOL);
 
-      const { data } = await this.walletService.createWallet();
+      const data = await this.walletService.createWallet();
 
       this.logger.log(
         `Sending ${value.lamports} lamports from ${data.publicKey} to ${receiverWalletPublicKey}`,
@@ -70,7 +67,27 @@ export class TransactionService {
         },
       );
 
-      return buildResponseObject(transactionHash);
+      return { transactionHash };
+    } catch (error) {
+      this.logger.error(error.message);
+      throw error;
+    }
+  }
+
+  async getTransactionFee() {
+    try {
+      this.logger.log(`Estimating transaction fee`);
+
+      const tx = new Transaction();
+
+      const { blockhash } = await this.connection.getLatestBlockhash();
+
+      tx.feePayer = Keypair.generate().publicKey;
+      tx.recentBlockhash = blockhash;
+
+      const fee = await tx.getEstimatedFee(this.connection);
+
+      return getValuesInSOLAndLamports(fee);
     } catch (error) {
       this.logger.error(error.message);
       throw error;

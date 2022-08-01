@@ -1184,6 +1184,14 @@
     "@solana/spl-token" "^0.1.8"
     "@solana/web3.js" "^1.31.0"
 
+"@metaplex/arweave-cost@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@metaplex/arweave-cost/-/arweave-cost-2.0.0.tgz#74d4dbb5b39e89f81fbc1a50220d1837fe0efdfd"
+  integrity sha512-i2FTLtg7Zz9sVJxKHlr3Ek1ibcG4l/we3r5ZQYlCtNFforBj+w6OnyGwdqSaFIkxSyYXqAlo9BY7cc/WEuTccA==
+  dependencies:
+    axios "^0.24.0"
+    debug "^4.3.2"
+
 "@metaplex/js@^4.12.0":
   version "4.12.0"
   resolved "https://registry.yarnpkg.com/@metaplex/js/-/js-4.12.0.tgz#1190767a4e69d4e5613002aab3f4c1fb8de07896"
@@ -2218,6 +2226,13 @@ axios@^0.21.1, axios@^0.21.3:
   integrity sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==
   dependencies:
     follow-redirects "^1.14.0"
+
+axios@^0.24.0:
+  version "0.24.0"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.24.0.tgz#804e6fa1e4b9c5288501dd9dff56a7a0940d20d6"
+  integrity sha512-Q6cWsys88HoPgAaFAVUb0WpPk0O8iTeisR9IMqy9G8AbO4NlpVknrnQS03zzF9PGAWgO3cgletO3VjV/P7VztA==
+  dependencies:
+    follow-redirects "^1.14.4"
 
 axios@^0.25.0:
   version "0.25.0"
@@ -3628,7 +3643,7 @@ flatted@^3.1.0:
   resolved "https://registry.npmjs.org/flatted/-/flatted-3.2.6.tgz"
   integrity sha512-0sQoMh9s0BYsm+12Huy/rkKxVu4R1+r96YX5cG44rHV0pQ6iC3Q+mkoMFaGWObMFYQxCVT+ssG1ksneA2MI9KQ==
 
-follow-redirects@^1.14.0, follow-redirects@^1.14.7, follow-redirects@^1.14.9:
+follow-redirects@^1.14.0, follow-redirects@^1.14.4, follow-redirects@^1.14.7, follow-redirects@^1.14.9:
   version "1.15.1"
   resolved "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.15.1.tgz"
   integrity sha512-yLAMQs+k0b2m7cVxpS1VKJVvoz7SS9Td1zss3XRwXj+ZDH00RJgnuLx7E44wx02kQLrdM3aOOy+FpzS7+8OizA==
