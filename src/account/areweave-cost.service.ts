@@ -20,16 +20,10 @@ export class ArweaveCostService {
       const data = await calculate([Number(byteLength)]);
 
       return {
-        exchangeRate: data.exchangeRate,
+        ...data,
         totalBytes: data.totalBytes,
-        solana: {
-          ...getValuesInSOLAndLamports(data.solana, true),
-          usd: data.solanaPrice,
-        },
-        arweave: {
-          ...getValuesInARAndWinstons(data.arweave, true),
-          usd: data.arweavePrice,
-        },
+        solana: getValuesInSOLAndLamports(data.solana, true),
+        arweave: getValuesInARAndWinstons(data.arweave, true),
       };
     } catch (error) {
       this.logger.error(error.message);
