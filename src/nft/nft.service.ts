@@ -123,6 +123,8 @@ export class NftService {
 
       const { nft } = await metaplex.nfts().create(nftInput).run();
 
+      this.logger.log(`NFT Created!`);
+
       return nft;
     } catch (error) {
       this.logger.error(error.message);
