@@ -17,7 +17,7 @@ export class AccountService {
         shouldCheckAccount,
         shouldCheckMint,
         shouldCheckMultisig,
-        customByteLength = 100,
+        customByteLengthArray = [100],
       } = body;
 
       const infosToCheck: { name: string; size: number }[] = [];
@@ -27,8 +27,9 @@ export class AccountService {
       if (shouldCheckMint) infosToCheck.push({ name: 'mint', size: MINT_SIZE });
       if (shouldCheckMultisig)
         infosToCheck.push({ name: 'multisig', size: MULTISIG_SIZE });
-      if (customByteLength)
-        infosToCheck.push({ name: 'custom', size: customByteLength });
+      customByteLengthArray.forEach((customByteLength, index) => {
+        infosToCheck.push({ name: `custom_${index}`, size: customByteLength });
+      });
 
       this.logger.log(`Checking minimum balance for rent exemption`);
 
@@ -40,16 +41,24 @@ export class AccountService {
 
       const arrayOfResponses = await Promise.all(promises);
 
-      const arrayOfResponseData = arrayOfResponses.map((result, index) => {
-        return {
-          ...infosToCheck[index],
+      const responseObject: {
+        [key: string]: {
+          size: number;
+          value: {
+            SOL: number;
+            lamports: number;
+          };
+        };
+      } = {};
+
+      arrayOfResponses.forEach((result, index) => {
+        responseObject[infosToCheck[index].name] = {
+          size: infosToCheck[index].size,
           value: getValuesInSOLAndLamports(result),
         };
       });
 
-      return {
-        arrayOfResponseData,
-      };
+      return responseObject;
     } catch (error) {
       this.logger.error(error.message);
       throw error;

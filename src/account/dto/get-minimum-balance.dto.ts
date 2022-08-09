@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsNumber, IsOptional } from 'class-validator';
+import { IsArray, IsBoolean, IsOptional } from 'class-validator';
 
 export class GetMinimumBalanceDTO {
   @ApiProperty({ required: false, type: Boolean })
@@ -19,6 +19,6 @@ export class GetMinimumBalanceDTO {
 
   @ApiProperty({ required: false, type: Number })
   @IsOptional()
-  @IsNumber()
-  customByteLength?: number;
+  @IsArray()
+  customByteLengthArray?: number[];
 }

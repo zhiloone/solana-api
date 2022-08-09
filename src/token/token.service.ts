@@ -64,12 +64,12 @@ export class TokenService {
       const wallet = Keypair.fromSecretKey(newWallet.privateKey.uint8Array);
       const mint = Keypair.fromSecretKey(newMint.privateKey.uint8Array);
 
-      const { arrayOfResponseData } =
+      const responseData =
         await this.accountService.getMinimumBalanceForRentExemption({
           shouldCheckMint: true,
         });
 
-      const mintPrice = arrayOfResponseData[0].value;
+      const mintPrice = responseData.mint.value;
 
       const accountInfo = await this.walletService.getAccountInfo(
         wallet.publicKey.toBase58(),
